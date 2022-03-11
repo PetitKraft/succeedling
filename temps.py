@@ -9,7 +9,7 @@ import time
 # DB設定
 config = {
     "user": "pizero",
-    "password": "H01SMwjWZTFZB41H",
+    "password": "bXkrWB5tJx4_AJb_",
     "host": "192.168.1.60",
     "port": 3306,
     "database": "succeedling",
