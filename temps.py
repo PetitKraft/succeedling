@@ -1,9 +1,9 @@
 #coding: utf-8
 
 import mysql.connector
-from w1thermsensor import W1ThermSensor
-import RPi.GPIO as GPIO
-import time
+#from w1thermsensor import W1ThermSensor
+#import RPi.GPIO as GPIO
+#import time
 
 
 # DB設定
@@ -31,10 +31,8 @@ register_temps = ("INSERT INTO temps "
 
 
 # 気温の取得
-#inside_temp = inside_sensor.get_temperature()
-#outside_temp = outside_sensor.get_temperature()
-inside_temp = 8.333
-outside_temp = 12.777
+inside_temp = 8.333 #inside_sensor.get_temperature()
+outside_temp = 12.777 #outside_sensor.get_temperature()
 
 
 data = {
@@ -43,7 +41,10 @@ data = {
 }
 
 
-# DBへの登録
+# DBへの挿入
 cursor.execute(register_temps, data)
+
+
 cursor.close()
+cnx.commit()
 cnx.close()
