@@ -26,13 +26,13 @@ register_temps = ("INSERT INTO temps "
 
 
 # センサーの設定 (もう一個のセンサーのID:3c01e0761dd6)
-#inside_sensor = W1ThermSensor(sensor_id="3c01e0761e16")
-#outside_sensor = W1ThermSensor(sensor_id="3c01e0767e5b")
+inside_sensor = W1ThermSensor(sensor_id="3c01e0761e16")
+outside_sensor = W1ThermSensor(sensor_id="3c01e0767e5b")
 
 
 # 気温の取得
-inside_temp = 8.333 #inside_sensor.get_temperature()
-outside_temp = 12.777 #outside_sensor.get_temperature()
+inside_temp = inside_sensor.get_temperature()
+outside_temp = outside_sensor.get_temperature()
 
 
 data = {
