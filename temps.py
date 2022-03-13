@@ -24,7 +24,7 @@ def main():
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
-    creds = service_account.Credentials.from_service_account_file("service_account_credentials.json")
+    creds = service_account.Credentials.from_service_account_file("/home/pi/succeedling/service_account_credentials.json")
 
 
 
@@ -32,9 +32,8 @@ def main():
        3c01e0761dd6: 短い,無印
        3c01e0761e16: 長い,黄色線1本
        3c01e0767e5b: 長い,黄色線2本,不調？"""
+    inside_sensor = W1ThermSensor(sensor_id="3c01e0761e16")
     outside_sensor = W1ThermSensor(sensor_id="3c01e0761dd6")
-    inside_sensor1 = W1ThermSensor(sensor_id="3c01e0761e16")
-    #inside_sensor2 = W1ThermSensor(sensor_id="3c01e0767e5b")
 
 
 
@@ -53,9 +52,8 @@ def main():
 
     # 気温の取得
     measured_at = datetime.datetime.now().isoformat()
+    inside_temp = inside_sensor1.get_temperature()
     outside_temp = outside_sensor.get_temperature()
-    inside_temp1 = inside_sensor1.get_temperature()
-    inside_temp2 = 80#inside_sensor2.get_temperature()
 
 
 
@@ -67,13 +65,13 @@ def main():
     #    GPIO.output(rwin_rpwm, isUp)
 
 
-    
+
     try:
         service = build('sheets', 'v4', credentials=creds)
 
         values = [
             [
-                measured_at, outside_temp, inside_temp1, inside_temp2
+                measured_at, inside_temp, outside_temp
             ],
         ]
         
@@ -89,9 +87,9 @@ def main():
                                            .get('updates')
                                            .get('updatedCells')))
 
-        print('Datetime, Outside, Inside1, Inside2:')
+        print('Datetime, Inside, Outside:')
         for row in values:
-            print('%s, %s, %s, %s' % (row[0], row[1], row[2], row[3]))
+            print('%s, %s, %s' % (row[0], row[1], row[2]))
 
     except HttpError as err:
         print(err)
