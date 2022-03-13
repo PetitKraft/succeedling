@@ -25,17 +25,16 @@ def main():
     Prints values from a sample spreadsheet.
     """
     creds = service_account.Credentials.from_service_account_file("service_account_credentials.json")
-        
 
 
 
     """センサーの設定
        3c01e0761dd6: 短い,無印
        3c01e0761e16: 長い,黄色線1本
-       3c01e0767e5b: 長い,黄色線2本"""
+       3c01e0767e5b: 長い,黄色線2本,不調？"""
     outside_sensor = W1ThermSensor(sensor_id="3c01e0761dd6")
-    inside_sensor1 = W1ThermSensor(sensor_id="3c01e0767e5b")
-    #inside_sensor2 = W1ThermSensor(sensor_id="3c01e0761e16")
+    inside_sensor1 = W1ThermSensor(sensor_id="3c01e0761e16")
+    #inside_sensor2 = W1ThermSensor(sensor_id="3c01e0767e5b")
 
 
 
