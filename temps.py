@@ -6,8 +6,8 @@ from google.oauth2.credentials import Credentials
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-#from w1thermsensor import W1ThermSensor
-#import RPi.GPIO as GPIO
+from w1thermsensor import W1ThermSensor
+import RPi.GPIO as GPIO
 import datetime
 import time
 
@@ -29,9 +29,13 @@ def main():
 
 
 
-    # センサーの設定 (もう一個のセンサーのID:3c01e0761dd6)
-    #inside_sensor = W1ThermSensor(sensor_id="3c01e0761e16")
-    #outside_sensor = W1ThermSensor(sensor_id="3c01e0767e5b")
+    """センサーの設定
+       3c01e0761dd6: 短い,無印
+       3c01e0761e16: 長い,黄色線1本
+       3c01e0767e5b: 長い,黄色線2本"""
+    outside_sensor = W1ThermSensor(sensor_id="3c01e0761dd6")
+    inside_sensor1 = W1ThermSensor(sensor_id="3c01e0767e5b")
+    #inside_sensor2 = W1ThermSensor(sensor_id="3c01e0761e16")
 
 
 
@@ -50,8 +54,9 @@ def main():
 
     # 気温の取得
     measured_at = datetime.datetime.now().isoformat()
-    inside_temp = 12.555#inside_sensor.get_temperature()
-    outside_temp = 19.588#outside_sensor.get_temperature()
+    outside_temp = outside_sensor.get_temperature()
+    inside_temp1 = inside_sensor1.get_temperature()
+    inside_temp2 = 80#inside_sensor2.get_temperature()
 
 
 
@@ -69,7 +74,7 @@ def main():
 
         values = [
             [
-                measured_at, inside_temp, outside_temp
+                measured_at, outside_temp, inside_temp1, inside_temp2
             ],
         ]
         
@@ -85,9 +90,9 @@ def main():
                                            .get('updates')
                                            .get('updatedCells')))
 
-        print('Datetime, Inside, Outside:')
+        print('Datetime, Outside, Inside1, Inside2:')
         for row in values:
-            print('%s, %s, %s' % (row[0], row[1], row[2]))
+            print('%s, %s, %s, %s' % (row[0], row[1], row[2], row[3]))
 
     except HttpError as err:
         print(err)
