@@ -52,7 +52,7 @@ def main():
 
     # 気温の取得
     measured_at = datetime.datetime.now().isoformat()
-    inside_temp = inside_sensor1.get_temperature()
+    inside_temp = inside_sensor.get_temperature()
     outside_temp = outside_sensor.get_temperature()
 
 
